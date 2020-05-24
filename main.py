@@ -1,4 +1,4 @@
-from settings.common import TOKEN
+from settings.common import TOKEN  # pylint: disable=no-name-in-module
 from aiwendil.aiwendil import client
 
 
