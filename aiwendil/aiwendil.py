@@ -45,13 +45,11 @@ async def job_group(bot, _input):
     
     else:
         edges = response['jobGroup']['edges']
-        print(f'Edges ========> {edges}')
         node = edges[0].get('node') if edges else None
-        print(f'Node =========> {node}')
         job_name = node.get('name') if node else None
         job_description = node.get('description') if node else None
 
-        embed = discord.Embed(color=0x1B1E94, type='rich')
+        embed = discord.Embed(color=0x8F2B10, type='rich')
         embed.add_field(name=f'{job_name}', value=f'{job_description}', inline=False)
 
         description = f'{username}, aqui está:'
