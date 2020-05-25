@@ -14,4 +14,25 @@ def get_job_group(name):
         }}
     }}
     '''
+
+    return gql(query)
+
+
+def get_ppe(name):
+    query = f'''
+    query{{
+        personalProtectiveEquipment(name:"{name}"){{
+            edges{{
+                node{{
+                    id
+                    name
+                    equipmentModel
+                    serialNumber
+                    description
+                }}
+            }}
+        }}
+    }}
+    '''
+
     return gql(query)
