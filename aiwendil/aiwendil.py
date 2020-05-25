@@ -26,7 +26,11 @@ async def h(bot):
     body = (f'''
         Olá {username}, em que posso ajuda-lo?
 
-        --job_group : <name> : Mostra as informações do grupo informado.
+        ```
+        --epi : <name> : Retorna informações sobre a EPI informada.
+
+        --job_group : <name> : Retorna as informações do grupo informado.
+        ```
     ''')
 
     return await bot.send(body)
@@ -51,8 +55,13 @@ async def job_group(bot, _input):
         group_name = node.get('name') if node else None
         group_description = node.get('description') if node else None
 
+        body = f'''
+        `Nome: {group_name}`
+        ```Descrição: {group_description}```
+        '''
+
         embed = discord.Embed(color=0x8F2B10, type='rich')
-        embed.add_field(name=f'{group_name}', value=f'{group_description}', inline=False)
+        embed.add_field(name=f'{group_name}', value=f'{body}', inline=False)
 
         description = f'{username}, aqui está:'
 
@@ -79,19 +88,14 @@ async def epi(bot, name):
         epi_description = node.get('description') if node else None
 
         body = f'''
-        ```
-        id: {epi_id}
-        nome: {epi_name}
-        Modelo: {epi_equipment_model}
-        Serial: {epi_serial}
-        ```
-        ```
-        Descrição:
-        {epi_description}
-        ```
+        `id: {epi_id}`
+        `nome: {epi_name}`
+        `Modelo: {epi_equipment_model}`
+        `Serial: {epi_serial}`
+        ```Descrição: {epi_description}```
         '''
 
-        embed = discord.Embed(color=0X8FB10, type='rich')
+        embed = discord.Embed(color=0x8FB10, type='rich')
         embed.add_field(name=f'{epi_name}', value=f'{body}', inline=False)
 
         description = f'{username}, aqui está:'
