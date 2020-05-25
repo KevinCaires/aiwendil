@@ -75,11 +75,24 @@ async def epi(bot, name):
         epi_id = node.get('id') if node else None
         epi_name = node.get('name') if node else None
         epi_equipment_model = node.get('equipmentModel') if node else None
-        epi_sertial = node.get('serialNumber') if node else None
+        epi_serial = node.get('serialNumber') if node else None
         epi_description = node.get('description') if node else None
 
+        body = f'''
+        ```
+        id: {epi_id}
+        nome: {epi_name}
+        Modelo: {epi_equipment_model}
+        Serial: {epi_serial}
+        ```
+        ```
+        Descrição:
+        {epi_description}
+        ```
+        '''
+
         embed = discord.Embed(color=0X8FB10, type='rich')
-        embed.add_field(name={epi_name}, value=f'{node}', inline=False)
+        embed.add_field(name=f'{epi_name}', value=f'{body}', inline=False)
 
         description = f'{username}, aqui está:'
 
