@@ -9,27 +9,39 @@ from os import system as sys
 
 client = commands.Bot(command_prefix='--')
 API = get_gql_client(API_URL)
+DA ='<@'
+FUCK = '>' 
 
 @client.event
 async def on_ready():
     sys('clear')
-    print('<----------On---------->')
-
+    print('''
+      ______   __                                          __  __  __ 
+     /      \ |  \                                        |  \|  \|  |
+    |  $$$$$$\| $$ __   __   __   ______   _______    ____| $$| $$| $$
+    | $$__| $$| $$|  \ |  \ |  \ /      \ |       \  /      $$| $$| $$
+    | $$    $$| $$| $$ | $$ | $$|  $$$$$$\| $$$$$$$\|  $$$$$$$| $$| $$
+    | $$$$$$$$| $$| $$ | $$ | $$| $$    $$| $$  | $$| $$  | $$| $$| $$
+    | $$  | $$| $$| $$_/ $$_/ $$| $$$$$$$$| $$  | $$| $$__| $$| $$| $$
+    | $$  | $$| $$ \$$   $$   $$ \$$     \| $$  | $$ \$$    $$| $$| $$
+     \$$   \$$ \$$  \$$$$$\$$$$   \$$$$$$$ \$$   \$$  \$$$$$$$ \$$ \$$
+                                                                    
+    ''')
 
 @client.command()
 async def h(bot):
     """
     Informa os comandos para consultas, cadastro e criações.
     """
-    username = '<@!' + str(bot.author.id) + '>'
+    username = DA + str(bot.author.id) + FUCK
 
     body = (f'''
-        Olá {username}, em que posso ajuda-lo?
+    Olá {username}, em que posso ajuda-lo?
 
         ```
-        --epi : <name> : Retorna informações sobre a EPI informada.
+    --epi : <string> : Retorna informações sobre a EPI informada.
 
-        --job_group : <name> : Retorna as informações do grupo informado.
+    --job_group : <string> : Retorna as informações do grupo informado.
         ```
     ''')
 
@@ -41,7 +53,7 @@ async def job_group(bot, _input):
     """
     Mostra o job group pelo nome.
     """
-    username = '<@!' + str(bot.author.id) + '>'
+    username = DA + str(bot.author.id) + FUCK
     payload = get_job_group(_input)
     api_client = API
     response = api_client.execute(payload)
@@ -73,7 +85,7 @@ async def epi(bot, name):
     """
     Lista de grupos de atividade.
     """
-    username = '<@!' + str(bot.author.id) + '>'
+    username = DA + str(bot.author.id) + FUCK
     payload = get_ppe(name)
     api_client = API
     response = api_client.execute(payload)
@@ -101,7 +113,7 @@ async def epi(bot, name):
         description = f'{username}, aqui está:'
 
         return await bot.send(description, embed=embed)
-    
+
     except:
         return await bot.send(f'''
         {username}, houve um erro!
