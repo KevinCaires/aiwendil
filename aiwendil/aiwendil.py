@@ -1,9 +1,10 @@
 import discord  # pylint: disable=import-error
 from discord.ext import commands  # pylint: disable=import-error
-from settings.common import API_URL  # pylint: disable=import-error, no-name-in-module
-from utils.tools import get_gql_client  # pylint: disable=import-error
-from utils.queries import get_job_group, get_ppe  # pylint: disable=import-error
 from os import system as sys
+from settings.common import API_URL  # pylint: disable=import-error, no-name-in-module
+from utils.tools import get_gql_client, decode_b64  # pylint: disable=import-error
+from utils.queries import get_job_group, get_ppe  # pylint: disable=import-error
+
 
 # Módulo principal do bot.
 
@@ -47,6 +48,32 @@ async def h(bot):
     ''')
 
     return await bot.send(body)
+
+
+@client.command()
+async def b64d(bot, _input):
+    """
+    Trás informações sobre a API mithrandir.
+    """
+    username = DA + str(bot.author.id) + FUCK
+
+    try:
+        response = decode_b64(_input)
+
+        return await bot.send(f'''
+{username}, aqui está meu caro amigo!
+
+`{response}`
+        ''')
+
+    except:
+        return await bot.send(f'''
+       
+{username}, se quer meu conselho parar usar aquele seu "fumo de corda"!
+
+`Você está me passando um valor inválido!`
+
+        ''')
 
 
 @client.command()
