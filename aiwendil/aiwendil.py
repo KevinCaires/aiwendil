@@ -7,7 +7,7 @@ from os import system as sys
 
 # Módulo principal do bot.
 
-client = commands.Bot(command_prefix='--')
+client = commands.Bot(command_prefix='>> ')
 API = get_gql_client(API_URL)
 DA ='<@'
 FUCK = '>' 
@@ -36,12 +36,13 @@ async def h(bot):
     username = DA + str(bot.author.id) + FUCK
 
     body = (f'''
-    Olá {username}, em que posso ajuda-lo?
+    Olá {username}, em que posso ajuda-lo? Logo digo, ">> " é meu prefixo!
 
         ```
-    --epi : <string> : Retorna informações sobre a EPI informada.
+    mithrandir : <string> : Retorna informações sobre a EPI informada.
 
-    --job_group : <string> : Retorna as informações do grupo informado.
+    h : Mostra essa mensagem.
+
         ```
     ''')
 
@@ -49,74 +50,29 @@ async def h(bot):
 
 
 @client.command()
-async def job_group(bot, _input):
+async def mithrandir(bot, *_input):
     """
-    Mostra o job group pelo nome.
+    Trás informações sobre a API mithrandir.
     """
     username = DA + str(bot.author.id) + FUCK
-    payload = get_job_group(_input)
-    api_client = API
-    response = api_client.execute(payload)
-
+    command = ' '.join(_input)
     if not _input:
-        return await bot.send(f'É necessário o nome grupo de atividades!')
-    
-    else:
-        edges = response['jobGroup']['edges']
-        node = edges[0].get('node') if edges else None
-        group_name = node.get('name') if node else None
-        group_description = node.get('description') if node else None
 
-        body = f'''
-        `Nome: {group_name}`
-        ```Descrição: {group_description}```
-        '''
-
-        embed = discord.Embed(color=0x8F2B10, type='rich')
-        embed.add_field(name=f'{group_name}', value=f'{body}', inline=False)
-
-        description = f'{username}, aqui está:'
-
-        return await bot.send(description, embed=embed)
-
-
-@client.command()
-async def epi(bot, name):
-    """
-    Lista de grupos de atividade.
-    """
-    username = DA + str(bot.author.id) + FUCK
-    payload = get_ppe(name)
-    api_client = API
-    response = api_client.execute(payload)
-
-    try:
-        edges = response['personalProtectiveEquipment']['edges']
-        node = edges[0].get('node') if edges else None
-        epi_id = node.get('id') if node else None
-        epi_name = node.get('name') if node else None
-        epi_equipment_model = node.get('equipmentModel') if node else None
-        epi_serial = node.get('serialNumber') if node else None
-        epi_description = node.get('description') if node else None
-
-        body = f'''
-        `id: {epi_id}`
-        `nome: {epi_name}`
-        `Modelo: {epi_equipment_model}`
-        `Serial: {epi_serial}`
-        ```Descrição: {epi_description}```
-        '''
-
-        embed = discord.Embed(color=0x8FB10, type='rich')
-        embed.add_field(name=f'{epi_name}', value=f'{body}', inline=False)
-
-        description = f'{username}, aqui está:'
-
-        return await bot.send(description, embed=embed)
-
-    except:
         return await bot.send(f'''
-        {username}, houve um erro!
-        Entre em contato com o admnistrador! 
-        ''')
+        Olá {username}, estou aqui para te ajudar com questões sobre a API mithrandir!
+        Para obter a informação desejada informe o comando `>> mithrandir -comando`.
 
+
+        ```
+        -eq : Trás a query usada para obter informações sobre equipamentos de proteção individual!
+        ```
+        ''')
+    
+    if command == '-eq':
+        return await bot.send(get_ppe())
+
+    return await bot.send(f'''
+    Ai ai ai, meu caro {username}, tá usando drogas de novo né!?
+
+    Sua entrada foi {command}
+    ''')
