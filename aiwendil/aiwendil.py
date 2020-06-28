@@ -2,7 +2,7 @@ import discord  # pylint: disable=import-error
 from discord.ext import commands  # pylint: disable=import-error
 from os import system as sys
 from settings.common import API_URL  # pylint: disable=import-error, no-name-in-module
-from utils.tools import get_gql_client, decode_b64  # pylint: disable=import-error
+from utils.tools import get_gql_client, decode_b64, encode_b64  # pylint: disable=import-error
 from utils.queries import get_job_group, get_ppe  # pylint: disable=import-error
 
 
@@ -53,12 +53,38 @@ async def h(bot):
 @client.command()
 async def b64d(bot, _input):
     """
-    Trás informações sobre a API mithrandir.
+    Decodifica hash base64.
     """
     username = DA + str(bot.author.id) + FUCK
 
     try:
         response = decode_b64(_input)
+
+        return await bot.send(f'''
+{username}, aqui está meu caro amigo!
+
+`{response}`
+        ''')
+
+    except:
+        return await bot.send(f'''
+       
+{username}, se quer meu conselho parar usar aquele seu "fumo de corda"!
+
+`Você está me passando um valor inválido!`
+
+        ''')
+
+
+@client.command()
+async def b64e(bot, _input):
+    """
+    Codifica a mensagem em uma hash base64.
+    """
+    username = DA + str(bot.author.id) + FUCK
+
+    try:
+        response = encode_b64(_input)
 
         return await bot.send(f'''
 {username}, aqui está meu caro amigo!
