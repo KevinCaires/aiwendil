@@ -1,5 +1,5 @@
 install:
-	pip isntall -r requirements/dependences.txt
+	pip install -r requirements/dependences.txt
 
 run:
 	python main.py
